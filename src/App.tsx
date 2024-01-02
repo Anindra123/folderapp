@@ -32,7 +32,7 @@ function App() {
   }
   return (
     <>
-      {isParent ? <Folder parentFolder={parentFolder} name={folderName} /> : (
+      {isParent ? <Folder parentFolder={parentFolder} /> : (
 
         <>
           <CreatFolderDialog setDialogOpen={setDialogOpen} setFolderName={setFolderName} handleSubmit={handleSubmit} isOpen={dialogOpen} />

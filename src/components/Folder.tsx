@@ -10,10 +10,10 @@ type Folder = {
 
 interface FolderProps {
     parentFolder: string[],
-    name: string
+
 }
 
-export default function Folder({ parentFolder, name }: FolderProps) {
+export default function Folder({ parentFolder }: FolderProps) {
     const [folder, setFolder] = useState<Folder[]>([])
     const [isParent, setIsParent] = useState(false);
     const [parentFolders, setParentFolder] = useState<string[]>(parentFolder);
@@ -38,7 +38,7 @@ export default function Folder({ parentFolder, name }: FolderProps) {
 
             {isParent ?
                 (<Folder parentFolder={parentFolders
-                } name={folderName} />) :
+                } />) :
                 (<>
                     <CreatFolderDialog setDialogOpen={setDialogOpen} setFolderName={setFolderName} handleSubmit={handleSubmit} isOpen={dialogOpen} />
                     <div className="mt-10">

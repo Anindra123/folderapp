@@ -9,6 +9,8 @@ To run on local dev server copy and paste the commands below
 ```bash
 git clone https://github.com/Anindra123/folderapp.git
 
+cd folderapp
+
 npm run dev
 ```
 

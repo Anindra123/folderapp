@@ -67,14 +67,14 @@ function App() {
     setCurrentPath([]);
   }
 
-  function handleDelete(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
-    let temp_folders = { ...folders };
+  // function handleDelete(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
+  //   let temp_folders = { ...folders };
 
-    temp_folders = Object.keys(temp_folders)
-      .filter((f) => f.includes(e.currentTarget.id));
+  //   temp_folders = Object.keys(temp_folders)
+  //     .filter((f) => f.includes(e.currentTarget.id));
 
-    console.log(temp_folders);
-  }
+  //   console.log(temp_folders);
+  // }
 
   function handleClick(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
     const temp_path: string[] = [...path]; //get all the path

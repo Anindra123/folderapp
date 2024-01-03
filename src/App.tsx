@@ -3,59 +3,85 @@ import { useState } from 'react'
 import './App.css'
 import CreatFolderDialog from './components/CreateFolderDialog';
 import Folder from './components/Folder';
-import { v4 as uuidv4 } from 'uuid';
+import Navigation from './components/Navigation';
 
-type Folder = {
-  id: string,
-  name: string,
 
+
+const initial_folder: any = {
+  folder1: {},
+  folder2: { sub1: {}, sub2: { subsub1: {} } },
 }
 
-function App() {
 
-  const [folderName, setFolderName] = useState("");
-  const [folder, setFolder] = useState<Folder[]>([])
+
+function App() {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [isParent, setIsParent] = useState(false);
-  const [parentFolder, setParentFolder] = useState<string[]>([]);
+  const [folderName, setFolderName] = useState("");
+  const [folders, setFolders] = useState(initial_folder);
+  const [renderFolder, setRenderFolder] = useState(initial_folder);
+  const [path, setCurrentPath] = useState<string[]>([]);
+
+  function handleNavigation(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
+    //check if current folders is accessed
+    if (path[path.length - 1] === path[Number(e.currentTarget.id)]) return;
+    let temp_folder = { ...folders }
+
+    //get all the folders that is under the current path
+    path.slice(0, Number(e.currentTarget.id) + 1).forEach((p) => {
+
+      temp_folder = temp_folder[p]
+    })
+
+    //set the navigation bar to have the new path
+    const newPath = path.slice(0, Number(e.currentTarget.id) + 1);
+
+    setCurrentPath(newPath);
+
+    setRenderFolder(temp_folder);
+  }
   function handleSubmit() {
-    setFolder([...folder, { id: uuidv4(), name: folderName }]);
+    const temp_folder = { ...renderFolder };
+    temp_folder[folderName] = {}; //adding new folder to current object
+    setRenderFolder(temp_folder); // setting it to render 
+
+    const all_folder_temp = { ...folders }; //getting all the folders
+    let currentFolders = all_folder_temp; //create a mutable copy of the current folders
+
+    //creating a flatlist
+    // since i need to creat subfolder on deeply nested object
+    path.map(p => {
+      const currKey = p;
+      currentFolders[currKey] = currentFolders[currKey] || {}
+      currentFolders = currentFolders[currKey]
+    })
+
+    //assigning new folder on that flatlist
+    currentFolders[folderName] = {};
+
+    setFolders(all_folder_temp);
     setDialogOpen(false);
   }
-  function handleClick(name: string) {
+  function BackToHome() {
+    setRenderFolder(initial_folder)
+    setCurrentPath([]);
+  }
 
-    setIsParent(true);
+  function handleClick(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
+    const temp_path: string[] = [...path]; //get all the path
+    temp_path.push(e.currentTarget //set the current path for the element that is clicked
+      .id);
+    setCurrentPath(temp_path) //update the path
 
-    setParentFolder([...parentFolder, name])
-
-
+    //set the current folder to render
+    const folder_to_render = renderFolder[e.currentTarget.id];
+    setRenderFolder(folder_to_render);
   }
   return (
     <>
-      {isParent ? <Folder parentFolder={parentFolder} /> : (
 
-        <>
-          <CreatFolderDialog setDialogOpen={setDialogOpen} setFolderName={setFolderName} handleSubmit={handleSubmit} isOpen={dialogOpen} />
-          <div className="mt-10">
-            <h1>{`Current path : /${parentFolder.toString().split(",").join("/")}`}</h1>
-          </div>
-
-          <div className='grid mt-10 grid-cols-12 gap-x-3 w-full'>
-            {folder.map((f) => (<a key={f.id} className='flex flex-row items-center gap-x-2 col-span-3 px-3 py-2 rounded-lg bg-gray-300 cursor-pointer hover:bg-gray-400 justify-start' id={f.name} onClick={e => handleClick(e.currentTarget.id)}>
-              <div>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                  <path d="M19.5 21a3 3 0 0 0 3-3v-4.5a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3V18a3 3 0 0 0 3 3h15ZM1.5 10.146V6a3 3 0 0 1 3-3h5.379a2.25 2.25 0 0 1 1.59.659l2.122 2.121c.14.141.331.22.53.22H19.5a3 3 0 0 1 3 3v1.146A4.483 4.483 0 0 0 19.5 9h-15a4.483 4.483 0 0 0-3 1.146Z" />
-                </svg>
-              </div>
-              <div>
-                <h1>{f.name}</h1>
-              </div>
-            </a>))}
-          </div>
-
-        </>
-      )}
-
+      <CreatFolderDialog setDialogOpen={setDialogOpen} setFolderName={setFolderName} handleSubmit={handleSubmit} isOpen={dialogOpen} />
+      <Navigation handleBackToHome={BackToHome} handleNavigation={handleNavigation} path={path} />
+      <Folder renderFolder={renderFolder} handleClick={handleClick} />
 
     </>
   )

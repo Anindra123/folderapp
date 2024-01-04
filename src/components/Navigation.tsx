@@ -7,23 +7,31 @@ import {
 
 import React from "react";
 
+interface Path {
+  id: string,
+  name: string
+}
+
 interface NavigationProps {
-  path: string[];
+  path: Path[];
   handleNavigation: (
     val: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => void;
   handleBackToHome: (
     val: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => void;
+
 }
 
 export default function Navigation({
   path,
   handleNavigation,
   handleBackToHome,
+
 }: NavigationProps) {
   return (
     <div className="mt-10 flex flex-row items-center justify-between bg-gray-200 rounded-lg p-5">
+
       <div className="flex flex-row gap-x-3 items-center">
         <div>
           <TooltipProvider>
@@ -65,7 +73,7 @@ export default function Navigation({
               onClick={(e) => handleNavigation(e)}
               className="  cursor-pointer hover:text-gray-950 underline flex flex-row items-center justify-center"
             >
-              {p}
+              {p.name}
             </a>
             <div>
               <p className="">/</p>

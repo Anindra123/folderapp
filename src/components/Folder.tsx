@@ -31,7 +31,7 @@ export default function Folder({
       />
 
       <div className="grid mt-10 grid-cols-12 gap-x-3 w-full">
-        {Object.keys(renderFolder).length === 0 && (
+        {Object.keys(renderFolder.children).length === 0 && (
           <div className="col-span-12 items-center justify-center">
             <div className="mt-10 flex items-center justify-center">
               <svg
@@ -56,7 +56,7 @@ export default function Folder({
             </div>
           </div>
         )}
-        {Object.keys(renderFolder).map((f, i) => (
+        {Object.keys(renderFolder.children).map((f, i) => (
           <div
             key={i}
             className="flex flex-row items-center justify-between col-span-2 p-3 rounded-lg bg-gray-300"
@@ -79,7 +79,7 @@ export default function Folder({
                 </div>
 
                 <div>
-                  <h1>{renderFolder[f].name}</h1>
+                  <h1>{renderFolder.children[f].name}</h1>
                 </div>
               </div>
             </a>

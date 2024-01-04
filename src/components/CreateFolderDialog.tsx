@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import {
   Dialog,
   DialogContent,
@@ -13,6 +13,7 @@ interface CreateFolderProps {
   setFolderName: Dispatch<SetStateAction<string>>;
   isOpen: boolean;
   setDialogOpen: Dispatch<SetStateAction<boolean>>;
+  folderError: string;
 }
 
 export default function CreatFolderDialog({
@@ -20,12 +21,20 @@ export default function CreatFolderDialog({
   setFolderName,
   isOpen,
   setDialogOpen,
+  folderError
 }: CreateFolderProps) {
+  function handleTextChange(e: React.KeyboardEvent<HTMLInputElement>) {
+    setFolderName(e.currentTarget.value);
+    if (isOpen === true && e.key === 'Enter') {
+      handleSubmit();
+    }
+  }
   return (
     <Dialog open={isOpen}>
       <DialogTrigger
         onClick={() => {
           setDialogOpen(!isOpen);
+          setFolderName("");
         }}
         className="p-2 rounded-lg bg-gray-800 hover:bg-gray-900 text-white font-bold"
       >
@@ -36,17 +45,21 @@ export default function CreatFolderDialog({
         <DialogHeader>
           <DialogTitle>Create Folder</DialogTitle>
         </DialogHeader>
-        <div className="grid grid-cols-4 gap-x-4 items-center">
-          <div>
+        <div className="grid grid-cols-8 gap-x-4 items-center">
+          <div className="col-span-4">
             <p>Name :</p>
           </div>
-          <div className="col-span-3">
+          <div className="col-span-4">
             <input
               type="text"
-              onChange={(e) => setFolderName(e.target.value)}
-              className="p-3 ring-gray-600 ring-1 rounded-lg focus:ring-gray-800 focus:ring-1"
+              onKeyDown={(e) => handleTextChange(e)}
+              className={`p-3 ring-gray-600 ring-1 rounded-lg focus:ring-gray-800 ${folderError.length > 0 && 'ring-2 ring-red-600'} focus:ring-1`}
               placeholder="Enter folder name"
             />
+          </div>
+          <div className="col-span-4"></div>
+          <div className="col-span-4">
+            <p className="text-md text-red-600">{folderError}</p>
           </div>
         </div>
         <div className="flex items-start justify-end gap-x-2">

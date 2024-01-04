@@ -24,6 +24,7 @@ export default function CreatFolderDialog({
   folderError
 }: CreateFolderProps) {
   function handleTextChange(e: React.KeyboardEvent<HTMLInputElement>) {
+
     setFolderName(e.currentTarget.value);
     if (isOpen === true && e.key === 'Enter') {
       handleSubmit();
@@ -52,7 +53,7 @@ export default function CreatFolderDialog({
           <div className="col-span-4">
             <input
               type="text"
-              onKeyDown={(e) => handleTextChange(e)}
+              onKeyUp={(e) => handleTextChange(e)}
               className={`p-3 ring-gray-600 ring-1 rounded-lg focus:ring-gray-800 ${folderError.length > 0 && 'ring-2 ring-red-600'} focus:ring-1`}
               placeholder="Enter folder name"
             />

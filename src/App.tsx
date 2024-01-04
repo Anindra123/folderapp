@@ -53,6 +53,7 @@ function App() {
   }
   function handleSubmit() {
     setFolderErr("");
+
     if (folderName.trim().length === 0) {
       setFolderErr("Folder name cannot be empty");
       return;

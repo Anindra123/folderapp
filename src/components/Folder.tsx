@@ -1,21 +1,6 @@
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/ui-components/ui/alert-dialog";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/ui-components/ui/dropdown-menu";
 import React from "react";
+import AlertModal from "./AlertModal";
+import Dropdown from "./Dropdown";
 
 interface FolderProps {
   renderFolder: any;
@@ -38,26 +23,39 @@ export default function Folder({
 }: FolderProps) {
   return (
     <>
-      <AlertDialog open={isAlertOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure ?</AlertDialogTitle>
-          </AlertDialogHeader>
-          <AlertDialogDescription>
-            This will delete this folder and it's subfolder permenantly
-          </AlertDialogDescription>
-          <AlertDialogFooter>
-            <AlertDialogAction id={selectedID} onClick={(e) => handleDelete(e)}>
-              Confirm
-            </AlertDialogAction>
-            <AlertDialogCancel onClick={() => setAlertOpen(!isAlertOpen)}>
-              Cancel
-            </AlertDialogCancel>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <AlertModal
+        isAlertOpen={isAlertOpen}
+        setAlertOpen={setAlertOpen}
+        selectedID={selectedID}
+        handleDelete={handleDelete}
+      />
 
       <div className="grid mt-10 grid-cols-12 gap-x-3 w-full">
+        {Object.keys(renderFolder).length === 0 && (
+          <div className="col-span-12 items-center justify-center">
+            <div className="mt-10 flex items-center justify-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="#6b7280"
+                className="w-24 h-24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776"
+                />
+              </svg>
+            </div>
+            <div>
+              <p className="text-2xl text-gray-500 font-semibold">
+                No folder available currently
+              </p>
+            </div>
+          </div>
+        )}
         {Object.keys(renderFolder).map((f, i) => (
           <div
             key={i}
@@ -86,44 +84,7 @@ export default function Folder({
               </div>
             </a>
             <div>
-              <DropdownMenu>
-                <DropdownMenuTrigger className="flex flex-row items-center">
-                  <a
-                    href=""
-                    className="flex flex-row items-center justify-center w-6 h-6 rounded-full hover:bg-gray-400 ring-0 border-none active:ring-0 active:border-none focus:ring-0 focus:border-none"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      className="w-6 h-6"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"
-                      />
-                    </svg>
-                  </a>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem className="cursor-pointer">
-                    About
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem className="cursor-pointer">
-                    <a
-                      id={f}
-                      onClick={(e) => handleAlert(e)}
-                      className="w-full"
-                    >
-                      Delete
-                    </a>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <Dropdown fileId={f} handleAlert={handleAlert} />
             </div>
           </div>
         ))}

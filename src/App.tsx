@@ -1,19 +1,16 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import CreatFolderDialog from "./components/CreateFolderDialog";
 import Folder from "./components/Folder";
 import Navigation from "./components/Navigation";
 
-const initial_folder: any = {
-  folder1: {},
-  folder2: { sub1: {}, sub2: { subsub1: {} } },
-};
+
 
 function App() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [folderName, setFolderName] = useState("");
-  const [folders, setFolders] = useState(initial_folder);
-  const [renderFolder, setRenderFolder] = useState(initial_folder);
+  const [folders, setFolders] = useState<any>({});
+  const [renderFolder, setRenderFolder] = useState<any>({});
   const [path, setCurrentPath] = useState<string[]>([]);
   const [isAlertOpen, setAlertOpen] = useState(false);
   const [selectedID, setSelectID] = useState("");
@@ -50,7 +47,7 @@ function App() {
     let currentFolders = all_folder_temp; //create a mutable copy of the current folders
 
     //creating a flatlist
-    // since i need to creat subfolder on deeply nested object
+    // since i need to create subfolder on deeply nested object
     path.forEach((p) => {
       const currKey = p;
       currentFolders[currKey] = currentFolders[currKey] || {};
@@ -79,11 +76,11 @@ function App() {
         current_folders[p] = current_folders[p] || {};
         current_folders = current_folders[p];
       });
-
       delete current_folders[e.currentTarget.id];
 
       //update the current folders
       setFolders(temp_folders);
+      setRenderFolder(current_folders);
     } else {
       //remove all subfolders from the folder
       let temp_paths = current_folders[e.currentTarget.id];

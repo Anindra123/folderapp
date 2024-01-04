@@ -11,6 +11,8 @@ git clone https://github.com/Anindra123/folderapp.git
 
 cd folderapp
 
+npm install
+
 npm run dev
 ```
 

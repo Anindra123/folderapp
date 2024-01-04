@@ -79,7 +79,7 @@ export default function Folder({
                 </div>
 
                 <div>
-                  <h1>{f}</h1>
+                  <h1>{renderFolder[f].name}</h1>
                 </div>
               </div>
             </a>

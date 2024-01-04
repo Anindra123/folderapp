@@ -3,7 +3,7 @@ import "./App.css";
 import CreatFolderDialog from "./components/CreateFolderDialog";
 import Folder from "./components/Folder";
 import Navigation from "./components/Navigation";
-
+import { v4 as uuidv4 } from 'uuid'
 
 
 function App() {
@@ -40,7 +40,9 @@ function App() {
   }
   function handleSubmit() {
     const temp_folder = { ...renderFolder };
-    temp_folder[folderName] = {}; //adding new folder to current object
+    const folder_id = uuidv4();
+    const folder_info = { name: folderName, created: new Date().getDate().toString() };
+    temp_folder[folder_id] = folder_info //adding new folder to current object
     setRenderFolder(temp_folder); // setting it to render
 
     const all_folder_temp = { ...folders }; //getting all the folders

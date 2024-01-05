@@ -30,7 +30,7 @@ export default function Folder({
         handleDelete={handleDelete}
       />
 
-      <div className="grid mt-10 grid-cols-12 gap-x-3 w-full">
+      <div className="grid mt-20 mx-10 transition-all ease-in-out duration-75 grid-cols-12 gap-x-3 w-full">
         {Object.keys(renderFolder.children).length === 0 && (
           <div className="col-span-12 items-center justify-center">
             <div className="mt-10 flex items-center justify-center">
@@ -59,20 +59,23 @@ export default function Folder({
         {Object.keys(renderFolder.children).map((f, i) => (
           <div
             key={i}
-            className="flex flex-row items-center justify-between col-span-2 p-3 rounded-lg bg-gray-300"
+            className="flex flex-col items-center  col-span-2 p-3 rounded-lg  ring-2 ring-gray-400"
           >
+            <div className="w-full  flex flex-row justify-end">
+              <Dropdown fileId={f} handleAlert={handleAlert} />
+            </div>
             <a
               className="flex flex-row items-center justify-between  cursor-pointer"
               id={f}
               onClick={(e) => handleClick(e)}
             >
-              <div className="flex flex-row items-center gap-x-2">
+              <div className="flex flex-col items-center  gap-x-2">
                 <div>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
-                    className="w-6 h-6"
+                    className="w-24 h-24"
                   >
                     <path d="M19.5 21a3 3 0 0 0 3-3v-4.5a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3V18a3 3 0 0 0 3 3h15ZM1.5 10.146V6a3 3 0 0 1 3-3h5.379a2.25 2.25 0 0 1 1.59.659l2.122 2.121c.14.141.331.22.53.22H19.5a3 3 0 0 1 3 3v1.146A4.483 4.483 0 0 0 19.5 9h-15a4.483 4.483 0 0 0-3 1.146Z" />
                   </svg>
@@ -83,9 +86,6 @@ export default function Folder({
                 </div>
               </div>
             </a>
-            <div>
-              <Dropdown fileId={f} handleAlert={handleAlert} />
-            </div>
           </div>
         ))}
       </div>

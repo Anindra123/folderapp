@@ -29,6 +29,10 @@ export default function CreatFolderDialog({
     if (isOpen === true && e.key === 'Enter') {
       handleSubmit();
     }
+    if (isOpen === true && e.key === "Escape") {
+      setDialogOpen(!isOpen);
+      setFolderName("");
+    }
   }
   return (
     <Dialog open={isOpen}>
@@ -37,7 +41,7 @@ export default function CreatFolderDialog({
           setDialogOpen(!isOpen);
           setFolderName("");
         }}
-        className="p-2 rounded-lg bg-gray-800 hover:bg-gray-900 text-white font-bold"
+        className="p-2 mt-10 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 bg-gray-800 hover:bg-gray-900 text-white font-bold"
       >
         Create Folder
       </DialogTrigger>

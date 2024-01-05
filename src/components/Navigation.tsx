@@ -30,7 +30,7 @@ export default function Navigation({
 
 }: NavigationProps) {
   return (
-    <div className="mt-10 flex flex-row items-center justify-between bg-gray-200 rounded-lg p-5">
+    <div className="mt-4 mx-10 flex flex-row items-center justify-between bg-gray-200 rounded-lg p-5">
 
       <div className="flex flex-row gap-x-3 items-center">
         <div>

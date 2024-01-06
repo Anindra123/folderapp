@@ -47,7 +47,7 @@ export default function AlertModal({ isAlertOpen
           <h1 className="text-2xl text-left font-bold">Are you sure ?</h1>
         </div>
         <div className="w-full ">
-          <h2 className="text-lg text-center">This will delete all files and subfolders under this folder permanently</h2>
+          <h2 className="text-lg text-left">This will delete all files and subfolders under this folder permanently</h2>
         </div>
         <div className="flex flex-row w-full mt-10 justify-end gap-x-2">
           <div>

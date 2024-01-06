@@ -13,7 +13,7 @@ interface FolderProps {
 export default function Folder({
   handleClick,
 }: // selectedID,
-FolderProps) {
+  FolderProps) {
   //const dropdownRef = useRef<HTMLDialogElement>(null);
 
   const { renderFolder } = useContext(FolderContext);
@@ -53,7 +53,7 @@ FolderProps) {
         alertModalRef={alertModalRef}
       />
 
-      <div className="grid mt-20 mx-10 transition-all ease-in-out duration-75 grid-cols-12 gap-x-3 w-full">
+      <div className="grid mt-20 transition-all ease-in-out duration-75 grid-cols-6 px-10 gap-x-3 gap-y-3 w-full">
         {Object.keys(renderFolder.children).length === 0 && (
           <div className="col-span-12 items-center justify-center">
             <div className="mt-10 flex items-center justify-center">
@@ -82,9 +82,9 @@ FolderProps) {
         {Object.keys(renderFolder.children).map((f, i) => (
           <div
             key={i}
-            className="flex flex-col items-center  col-span-2 p-3 hover:shadow-lg hover:shadow-gray-900 transition-all ease-in-out rounded-lg  ring-2 ring-gray-400"
+            className="flex flex-col items-center max-w-sm p-3 hover:shadow-lg hover:shadow-gray-900 transition-all ease-in-out rounded-lg  ring-2 ring-gray-400"
           >
-            <div className="w-full  flex flex-row justify-end relative">
+            <div className="w-full max-w-sm  flex flex-row justify-end relative">
               <a
                 className="flex  flex-row cursor-pointer items-center justify-center w-6 h-6 rounded-full hover:bg-gray-400 ring-0 border-none active:ring-0 active:border-none focus:ring-1 focus:ring-gray-500 focus:outline-none"
                 id={f}

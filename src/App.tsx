@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { Path } from "./types/FolderTypes";
 import "./App.css";
-import CreatFolderDialog from "./components/CreateFolderDialog";
 import Folder from "./components/Folder";
 import Navigation from "./components/Navigation";
-import { v4 as uuidv4 } from 'uuid'
 import { FolderContext } from "./context/FolderContext";
+import CreateFolderModal from "./components/Create/CreateFolderModal";
 
 
 
@@ -18,8 +17,7 @@ const rootfolder = JSON.stringify({
 
 
 function App() {
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [folderName, setFolderName] = useState("");
+
   const [folders, setFolders] = useState<any>(JSON.parse(
     localStorage.getItem("all_folder") || rootfolder
   ));
@@ -27,14 +25,6 @@ function App() {
   const [path, setCurrentPath] = useState<Array<Path>>(JSON.parse(
     localStorage.getItem("path") || JSON.stringify([])
   ));
-
-
-
-
-  // const [isAlertOpen, setAlertOpen] = useState(false);
-  // const [selectedID, setSelectID] = useState("");
-  const [folderErr, setFolderErr] = useState("");
-
 
 
   function handleNavigation(
@@ -58,50 +48,7 @@ function App() {
 
     setRenderFolder(temp_folder);
   }
-  function handleSubmit() {
-    setFolderErr("");
 
-    if (folderName.trim().length === 0) {
-      setFolderErr("Folder name cannot be empty");
-      return;
-    }
-
-    const temp_folder = { ...renderFolder };
-    const folder_id = uuidv4();
-    const date = new Date();
-    const folder_info = { name: folderName, created: date.toLocaleDateString(), children: {} };
-
-    temp_folder.children[folder_id] = folder_info //adding new folder to current object
-
-    localStorage.setItem("render_folder", JSON.stringify(temp_folder));
-
-    setRenderFolder(temp_folder); // setting it to render
-
-    const all_folder_temp = { ...folders }; //getting all the folders
-    let currentFolders = all_folder_temp; //create a mutable copy of the current folders
-
-    if (path.length > 0) {
-
-
-      path.forEach((p) => {
-
-        currentFolders.children[p.id] = currentFolders.children[p.id] || {}
-        currentFolders = currentFolders.children[p.id];
-      })
-      currentFolders.children[folder_id] = folder_info;
-
-    }
-    else {
-      currentFolders.children[folder_id] = folder_info;
-    }
-
-
-
-    setFolders(all_folder_temp);
-
-    localStorage.setItem("all_folder", JSON.stringify(folders));
-    setDialogOpen(false);
-  }
   function BackToHome() {
     localStorage.setItem("render_folder", JSON.stringify(folders));
     localStorage.setItem("all_folder", JSON.stringify(folders));
@@ -133,13 +80,17 @@ function App() {
         <div className="mt-10">
           <h1 className="text-3xl font-bold">Folder App</h1>
         </div>
-        <CreatFolderDialog
-          setDialogOpen={setDialogOpen}
-          setFolderName={setFolderName}
-          handleSubmit={handleSubmit}
-          isOpen={dialogOpen}
-          folderError={folderErr}
-        />
+
+        <FolderContext.Provider value={{
+          folders: folders,
+          setFolders: setFolders,
+          path: path,
+          setCurrentPath: setCurrentPath,
+          setRenderFolder: setRenderFolder,
+          renderFolder: renderFolder
+        }}>
+          <CreateFolderModal />
+        </FolderContext.Provider>
       </div>
       <div className="flex-1">
         <Navigation

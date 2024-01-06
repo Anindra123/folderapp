@@ -1,33 +1,56 @@
-import React from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import AlertModal from "./AlertModal";
 import Dropdown from "./Dropdown";
+import SortOptionDialog from "./Sorting/SortOptionDialog";
+import { FolderContext } from "@/context/FolderContext";
 
 interface FolderProps {
-  renderFolder: any;
   handleClick: (val: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
-  handleDelete: (val: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  isAlertOpen: boolean;
-  selectedID: string;
-  setAlertOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  handleAlert: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
+
+  // selectedID: string;
 }
 
 export default function Folder({
-  renderFolder,
   handleClick,
-  handleDelete,
-  handleAlert,
-  isAlertOpen,
-  setAlertOpen,
-  selectedID,
-}: FolderProps) {
+}: // selectedID,
+FolderProps) {
+  //const dropdownRef = useRef<HTMLDialogElement>(null);
+
+  const { renderFolder } = useContext(FolderContext);
+  const [isDropDownOpen, setDropDownOpen] = useState("");
+  const [isAlertOpen, setAlertOpen] = useState(false);
+  const alertModalRef = useRef<HTMLDialogElement>(null);
+  const [selectedID, setSelectedId] = useState("");
+
+  function handleDropDown(e: string) {
+    if (isDropDownOpen.length > 0) {
+      setDropDownOpen("");
+    } else {
+      setDropDownOpen(e);
+    }
+  }
+
+  useEffect(() => {
+    function closeDropDown(e: Event) {
+      const target: HTMLElement = e.target as HTMLElement;
+
+      if (!target.classList.contains("dropdownBtn")) {
+        setDropDownOpen("");
+      }
+    }
+
+    document.body.addEventListener("click", closeDropDown);
+    return () => document.body.removeEventListener("click", closeDropDown);
+  }, []);
+
   return (
     <>
+      <SortOptionDialog />
       <AlertModal
         isAlertOpen={isAlertOpen}
         setAlertOpen={setAlertOpen}
         selectedID={selectedID}
-        handleDelete={handleDelete}
+        alertModalRef={alertModalRef}
       />
 
       <div className="grid mt-20 mx-10 transition-all ease-in-out duration-75 grid-cols-12 gap-x-3 w-full">
@@ -59,10 +82,37 @@ export default function Folder({
         {Object.keys(renderFolder.children).map((f, i) => (
           <div
             key={i}
-            className="flex flex-col items-center  col-span-2 p-3 rounded-lg  ring-2 ring-gray-400"
+            className="flex flex-col items-center  col-span-2 p-3 hover:shadow-lg hover:shadow-gray-900 transition-all ease-in-out rounded-lg  ring-2 ring-gray-400"
           >
-            <div className="w-full  flex flex-row justify-end">
-              <Dropdown fileId={f} handleAlert={handleAlert} />
+            <div className="w-full  flex flex-row justify-end relative">
+              <a
+                className="flex  flex-row cursor-pointer items-center justify-center w-6 h-6 rounded-full hover:bg-gray-400 ring-0 border-none active:ring-0 active:border-none focus:ring-1 focus:ring-gray-500 focus:outline-none"
+                id={f}
+                onClick={(e) => handleDropDown(e.currentTarget.id)}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  className="w-6 h-6 dropdownBtn"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"
+                  />
+                </svg>
+              </a>
+
+              <Dropdown
+                setAlertOpen={setAlertOpen}
+                isDropdownOpen={isDropDownOpen}
+                setSelectedId={setSelectedId}
+                fileId={f}
+                alertModalRef={alertModalRef}
+              />
             </div>
             <a
               className="flex flex-row items-center justify-between  cursor-pointer"

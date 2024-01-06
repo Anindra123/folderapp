@@ -1,4 +1,9 @@
-<h1 style="text-align:center;">Folder App 📁</h1>
+<table>
+  <th></th>
+  <th><h1>Folder App 📁</h1></th>
+  <th></th>
+  
+</table>
 
 A folder management app to manage folders online. Users can update, create, delete, sort folders through a well polished UI.Made with React JS, typescript and tailwind.
 

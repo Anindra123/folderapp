@@ -1,11 +1,14 @@
-<table>
-  <th></th>
-  <th><h1>Folder App 📁</h1></th>
-  <th></th>
-  
-</table>
+<p align="center"><h1 align="center"> FolderApp 📂</h1></p>
+
+<p align="center">
+  <a href="">
+    <img src="https://raw.githubusercontent.com/abumalick/powered-by-vercel/master/powered-by-vercel.svg"/>
+  </a>
+</p>
 
 A folder management app to manage folders online. Users can update, create, delete, sort folders through a well polished UI.Made with React JS, typescript and tailwind.
+
+
 
 ## Features 📦
 

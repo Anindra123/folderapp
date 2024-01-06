@@ -1,55 +1,46 @@
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/ui-components/ui/dropdown-menu";
+import React, { SetStateAction } from "react"
+
+
 
 interface DropdownProps {
     fileId: string,
-    handleAlert: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void,
+    isDropdownOpen: string,
+    alertModalRef: React.RefObject<HTMLDialogElement>,
+
+    setSelectedId: React.Dispatch<SetStateAction<string>>
+    setAlertOpen: React.Dispatch<SetStateAction<boolean>>,
 }
 
-export default function Dropdown({ fileId, handleAlert }: DropdownProps) {
+
+export default function Dropdown({ fileId
+    , isDropdownOpen
+    , setAlertOpen
+    , alertModalRef
+    , setSelectedId }: DropdownProps) {
+    function handleAlert(e: string) {
+        setAlertOpen(false);
+        setSelectedId(e);
+        setAlertOpen(true);
+        alertModalRef.current?.showModal();
+    }
+
     return (
-        <DropdownMenu>
-            <DropdownMenuTrigger className="flex flex-row items-center">
-                <a
-                    href=""
-                    className="flex flex-row items-center justify-center w-6 h-6 rounded-full hover:bg-gray-400 ring-0 border-none active:ring-0 active:border-none focus:ring-0 focus:border-none"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        className="w-6 h-6"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"
-                        />
-                    </svg>
-                </a>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-                <DropdownMenuItem className="cursor-pointer">
-                    About
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem className="cursor-pointer">
-                    <a
-                        id={fileId}
-                        onClick={(e) => handleAlert(e)}
-                        className="w-full"
-                    >
+        <>
+
+            <dialog id={`dropdown${fileId}`} open={fileId === isDropdownOpen} className="m-0 absolute left-16 focus:outline-none focus:ring-0  focus:ring-gray-800 border border-gray-600 top-8 shadow-lg shadow-gray-900 rounded-md z-40">
+
+                <div className="flex flex-col  w-fit rounded-md bg-gray-100">
+
+                    <a className=" hover:bg-gray-600 w-24 m-0.5 flex justify-center rounded-md cursor-pointer hover:text-gray-100 bg-gray-100 text-gray-900">
+                        About
+                    </a>
+
+                    <div className="w-full h-0.5 bg-gray-300"></div>
+                    <a id={fileId} onClick={e => handleAlert(e.currentTarget.id)} className="cursor-pointer m-0.5 w-24 flex justify-center rounded-md hover:bg-gray-600 hover:text-gray-100 bg-gray-100 text-gray-900">
                         Delete
                     </a>
-                </DropdownMenuItem>
-            </DropdownMenuContent>
-        </DropdownMenu>
+                </div>
+            </dialog>
+        </>
     )
 }

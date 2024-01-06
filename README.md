@@ -1,25 +1,58 @@
-# Folder App
+<p align="center"><h1 align="center"> FolderApp 📂</h1></p>
 
-A folder app to manage folders,create subfolders.Made with React JS and tailwind.
+<p align="center">
+    <a href="https://opensource.org/licenses/MIT">
+        <img src="https://img.shields.io/badge/License-MIT-yellow.svg"/>
+    </a>
+</p>
 
-## Run Locally
+<p align="center">
+  <a href="https://vercel.com?utm\_source=github\_readme\_stats\_team\&utm\_campaign=oss">
+    <img src="https://raw.githubusercontent.com/abumalick/powered-by-vercel/master/powered-by-vercel.svg"/>
+  </a>
+</p>
 
-To run on local dev server copy and paste the commands below.After running the commands open a browser and go to `http://localhost:5173` to view the website
+A folder management app to manage folders online. Users can update, create, delete, sort folders through a well polished UI.Made with React JS, typescript and tailwind.
+
+## Features 📦
+
+- Creating folders and subfolders
+
+- Navigation between folders
+
+- Folder deletion
+
+- Sort folders alphabetically both ascending and descending
+
+## Run Locally 💻
+
+To run on local dev server.
+
+- Clone the repository
 
 ```bash
 git clone https://github.com/Anindra123/folderapp.git
 
 cd folderapp
+```
 
+- Install npm dependencies
+
+```bash
 npm install
+```
 
+- run npm dev server
+
+```bash
 npm run dev
 ```
 
-## Dependencies
+This will start a local server on port 5173. Navigate to `http://localhost:5173/` to view a local build of the website.
+
+## Dependencies ⚙️
 
 - [React](https://react.dev/)
 - [Vite](https://vitejs.dev/guide/)
 - [Tailwind](https://tailwindcss.com/)
-- [shadcn-ui](https://github.com/shadcn-ui/ui)
 - [uuid](https://www.npmjs.com/package/uuid)

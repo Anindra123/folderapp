@@ -61,18 +61,7 @@ function App() {
   }
 
 
-  function handleClick(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
-    const temp_path: Path[] = [...path]; //get all the path
-    temp_path.push(
-      { id: e.currentTarget.id, name: renderFolder.children[e.currentTarget.id].name } //set the current path for the element that is clicked
-    );
-    localStorage.setItem("path", JSON.stringify(temp_path));
-    setCurrentPath(temp_path); //update the path
-    //set the current folder to render
-    const folder_to_render = renderFolder.children[e.currentTarget.id];
-    setRenderFolder(folder_to_render);
-    localStorage.setItem("render_folder", JSON.stringify(folder_to_render));
-  }
+
 
 
   return (

@@ -10,6 +10,7 @@ import CreateFolderModal from "./components/Create/CreateFolderModal";
 
 const rootfolder = JSON.stringify({
   name: "root",
+  color: "#000000",
   created: "",
   children: {}
 })

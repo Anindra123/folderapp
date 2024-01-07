@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Path } from "./types/FolderTypes";
 import "./App.css";
-import Folder from "./components/Folder";
 import Navigation from "./components/Navigation";
 import { FolderContext } from "./context/FolderContext";
 import CreateFolderModal from "./components/Create/CreateFolderModal";
+import FolderGrid from "./components/FolderGrid";
 
 
 
@@ -109,7 +109,7 @@ function App() {
           , setRenderFolder: setRenderFolder
           , renderFolder: renderFolder
         }}>
-          <Folder handleClick={handleClick} />
+          <FolderGrid handleClick={handleClick} />
         </FolderContext.Provider>
       </div>
     </div>

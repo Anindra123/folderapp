@@ -5,6 +5,15 @@ export interface Path {
   name: string;
 }
 
+export interface FolderData {
+  folderName: string;
+  folderColor: string;
+}
+export interface FolderErrData {
+  folderNameErr: string;
+  folderColorErr: string;
+}
+
 export interface FolderContextTypes {
   folders: any;
   setFolders: React.Dispatch<any> | null;

@@ -109,7 +109,7 @@ function App() {
           , setRenderFolder: setRenderFolder
           , renderFolder: renderFolder
         }}>
-          <FolderGrid handleClick={handleClick} />
+          <FolderGrid />
         </FolderContext.Provider>
       </div>
     </div>

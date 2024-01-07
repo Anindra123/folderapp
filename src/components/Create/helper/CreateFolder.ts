@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export default function CreateFolder(
   folderName: string,
+  folderColor: string,
   folderArguments: FolderContextTypes
 ) {
   const { path, folders, setFolders, renderFolder, setRenderFolder } =
@@ -12,6 +13,7 @@ export default function CreateFolder(
   const date = new Date();
   const folder_info = {
     name: folderName,
+    color: folderColor,
     created: date.toLocaleDateString(),
     children: {},
   };

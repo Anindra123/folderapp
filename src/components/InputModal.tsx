@@ -89,10 +89,10 @@ export default function InputModal({ inputDialogRef
                     </div>
                     <div className="flex flex-row w-full mt-10 justify-end gap-x-2">
                         <div >
-                            <a ref={confirmButtonRef} className="text-white p-3 cursor-pointer hover:bg-black rounded-lg font-semibold bg-gray-800" onClick={handleSubmit}>Confirm</a>
+                            <a className="text-gray-900 p-3 rounded-lg cursor-pointer hover:bg-gray-300 font-semibold bg-gray-100 border border-gray-900" onClick={handleModalOpen}>Cancel</a>
                         </div>
                         <div>
-                            <a className="text-gray-900 p-3 rounded-lg cursor-pointer hover:bg-gray-300 font-semibold bg-gray-100 border border-gray-900" onClick={handleModalOpen}>Cancel</a>
+                            <a ref={confirmButtonRef} className="text-white p-3 cursor-pointer hover:bg-black rounded-lg font-semibold bg-gray-800" onClick={handleSubmit}>Confirm</a>
                         </div>
                     </div>
 
